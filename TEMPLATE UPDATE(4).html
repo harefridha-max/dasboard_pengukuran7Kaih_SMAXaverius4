@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Pemantauan 7 Kebiasaan Anak Indonesia Hebat — SMA Xaverius 4 Palembang</title>
+    
+    <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['"Outfit"', 'sans-serif'],
+                    },
+                    colors: {
+                        pastel: {
+                            bg: '#F8FAFC',
+                            sky: '#E0F2FE',
+                            skyDark: '#0284C7',
+                            mint: '#DCFCE7',
+                            mintDark: '#16A34A',
+                            peach: '#FFEDD5',
+                            peachDark: '#EA580C',
+                            lavender: '#F3E8FF',
+                            lavenderDark: '#9333EA',
+                            butter: '#FEF9C3',
+                            butterDark: '#CA8A04',
+                        },
+                        xaverius: {
+                            blue: '#1D4ED8',
+                            gold: '#FACC15'
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 30px -5px rgba(15, 23, 42, 0.04), 0 4px 12px -2px rgba(15, 23, 42, 0.02)',
+                        'soft-hover': '0 20px 35px -5px rgba(15, 23, 42, 0.08), 0 8px 16px -4px rgba(15, 23, 42, 0.03)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #F8FAFC;
+            color: #1E293B;
+            overflow-x: hidden;
+        }
+
+        /* Animasi melayang lembut untuk maskot Xavi */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-6px) rotate(1.5deg); }
+        }
+        .animate-float {
+            animation: floatSlow 4s ease-in-out infinite;
+        }
+
+        /* Transisi kartu Bento */
+        .bento-card {
+            transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+        }
+        .bento-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 35px -5px rgba(15, 23, 42, 0.07), 0 8px 16px -4px rgba(15, 23, 42, 0.03);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F1F5F9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94A3B8;
+        }
+
+        /* Print / Save PDF Styling untuk Presentasi Juri */
+        @media print {
+            body {
+                background-color: #FFFFFF !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .bento-card {
+                box-shadow: none !important;
+                border: 1px solid #E2E8F0 !important;
+                break-inside: avoid;
+            }
+            .max-w-7xl {
+                max-width: 100% !important;
+                padding: 0 !important;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-sky-200 selection:text-sky-900">
+                <!-- Emblem / Logo Identitas Xaverius 4 -->
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-blue-600 to-sky-500 flex items-center justify-center text-white shadow-md shrink-0 relative">
+                    <i data-lucide="sparkles" class="w-6 h-6 sm:w-7 sm:h-7 text-yellow-300"></i>
+                    <span class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-yellow-400 border-2 border-white flex items-center justify-center text-[10px] font-extrabold text-blue-900">X4</span>
+                </div>
+                <div>
+                    <div class="flex flex-wrap items-center gap-2 mb-1">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-blue-600 text-white shadow-sm">
+                            <i data-lucide="graduation-cap" class="w-3.5 h-3.5 text-yellow-300"></i>
+                            SMA Xaverius 4 Palembang
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-pastel-sky text-blue-800 border border-sky-200">
+                            <i data-lucide="award" class="w-3.5 h-3.5 text-blue-600"></i>
+                            Karya Xavour Team
+                        </span>
+                        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-pastel-butter text-amber-800 border border-amber-200">
+                            Lomba Inovasi Dashboard AI • belajar.id
+                        </span>
+                    </div>
+                    <h1 class="font-display text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">
+                        Dashboard Pemantauan 7 Kebiasaan Anak Indonesia Hebat
+                    </h1>
+                    <p class="text-xs sm:text-sm font-semibold text-slate-500 mt-0.5">
+                        SMA Xaverius 4 Palembang • <span class="text-blue-700 font-bold">7KAIH Character Tracker</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tombol Aksi Header -->
+            <div class="flex flex-wrap items-center gap-2.5 no-print">
+                <button onclick="resetFilters()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200/80 transition active:scale-95">
+                    <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                    <span>Reset Filter</span>
+                </button>
+                <button onclick="window.print()" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-sky-500 hover:from-blue-700 hover:to-sky-600 shadow-md shadow-sky-200 transition active:scale-95">
+                    <i data-lucide="printer" class="w-4 h-4"></i>
+                    <span>Cetak / Simpan PDF</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- 2. WELCOME BANNER DENGAN MASKOT EKSKLUSIF 'XAVI' + FILTER INTERAKTIF -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Welcome Banner + Maskot Xavi (7 Kolom) -->
+            <div class="lg:col-span-7 bg-gradient-to-br from-[#E0F2FE] via-[#EFF6FF] to-[#FEF9C3] rounded-3xl p-6 sm:p-7 shadow-soft border border-sky-100/80 relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-6">
+                <!-- Dekorasi Lingkaran Pastel -->
+                <div class="absolute -top-12 -right-12 w-44 h-44 rounded-full bg-white/40 blur-xl pointer-events-none"></div>
+                <div class="absolute -bottom-10 left-10 w-32 h-32 rounded-full bg-yellow-200/40 blur-lg pointer-events-none"></div>
+
+                <div class="space-y-3 relative z-10 max-w-md text-center sm:text-left">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 backdrop-blur-sm text-xs font-bold text-blue-700 shadow-sm">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        Halo Xaverian! Aku Xavi, Asisten Karaktermu
+                    </div>
+                    <h2 class="font-display text-xl sm:text-2xl font-extrabold text-slate-900 leading-snug">
+                        Pantau 7 Kebiasaan Anak Indonesia Hebat Secara Real-Time!
+                    </h2>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Data diolah dari <strong class="text-slate-800">519 respons survei berkala</strong> (4 gelombang: 6–16 Nov 2026) siswa <strong class="text-blue-700">SMA Xaverius 4 Palembang</strong> dengan audit kualitas data AI.
+                    </p>
+                    <div class="pt-1 flex flex-wrap items-center justify-center sm:justify-start gap-2 text-xs font-semibold text-slate-700">
+                        <span class="px-3 py-1.5 rounded-xl bg-white/90 shadow-sm flex items-center gap-1.5">
+                            <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i> 439 Siswa Unik Terverifikasi
+                        </span>
+                        <span class="px-3 py-1.5 rounded-xl bg-white/90 shadow-sm flex items-center gap-1.5">
+                            <i data-lucide="sparkles" class="w-4 h-4 text-amber-500"></i> 34 Indikator Terskala
+                        </span>
+                    </div>
+                </div>
+
+                <!-- ILUSTRASI SVG VEKTOR KUSTOM MASKOT 'XAVI' (Flat-3D Modern Gen-Z Style, Aksen Biru-Kuning Xaverius) -->
+                <div class="relative z-10 shrink-0 animate-float">
+                    <svg width="168" height="175" viewBox="0 0 200 210" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Maskot Xavi SMA Xaverius 04 Palembang">
+                        <defs>
+                            <linearGradient id="xaviFace" x1="60" y1="45" x2="140" y2="135" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="#FFEAD5"/>
+                                <stop offset="100%" stop-color="#FDBA74"/>
+                            </linearGradient>
+                            <linearGradient id="xaviHair" x1="50" y1="20" x2="150" y2="95" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="#1E3A8A"/>
+                                <stop offset="100%" stop-color="#0F172A"/>
+                            </linearGradient>
+                            <linearGradient id="xaviJacket" x1="40" y1="125" x2="160" y2="205" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="#2563EB"/>
+                                <stop offset="100%" stop-color="#1D4ED8"/>
+                            </linearGradient>
+                            <linearGradient id="xaviGold" x1="75" y1="125" x2="125" y2="195" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="#FDE047"/>
+                                <stop offset="100%" stop-color="#EAB308"/>
+                            </linearGradient>
+                            <filter id="softDrop" x="-15%" y="-15%" width="130%" height="130%">
+                                <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#1E3A8A" flood-opacity="0.15"/>
+                            </filter>
+                        </defs>
+
+                        <!-- Bayangan Lantai -->
+                        <ellipse cx="100" cy="198" rx="52" ry="8" fill="#93C5FD" fill-opacity="0.45"/>
+
+                        <!-- Tangan Kiri Melambai Ceria -->
+                        <g filter="url(#softDrop)">
+                            <path d="M46 146C30 136 22 118 28 106C33 96 45 101 53 114L62 132" fill="url(#xaviJacket)"/>
+                            <circle cx="29" cy="104" r="10" fill="url(#xaviFace)"/>
+                            <!-- Sparkle dekat tangan -->
+                            <path d="M16 86L18.5 91.5L24 94L18.5 96.5L16 102L13.5 96.5L8 94L13.5 91.5L16 86Z" fill="#FACC15"/>
+                        </g>
+
+                        <!-- Badan / Jaket Varsity Modern SMA Xaverius 04 -->
+                        <g filter="url(#softDrop)">
+                            <path d="M52 142C52 128 66 120 100 120C134 120 148 128 148 142L155 188C156 194 151 198 145 198H55C49 198 44 194 45 188L52 142Z" fill="url(#xaviJacket)"/>
+                            <!-- Kaos Dalam Kuning Emas Xaverius -->
+                            <path d="M84 121H116L112 198H88L84 121Z" fill="url(#xaviGold)"/>
+                            <!-- Kerah Putih Crisp -->
+                            <path d="M76 120L100 136L124 120L116 114H84L76 120Z" fill="#FFFFFF"/>
+                            <!-- Lencana X4 di Dada -->
+                            <rect x="118" y="142" width="20" height="20" rx="6" fill="#FACC15"/>
+                            <text x="128" y="155" text-anchor="middle" fill="#1E3A8A" font-family="Outfit, sans-serif" font-weight="800" font-size="10">X4</text>
+                        </g>
+
+                        <!-- Tangan Kanan Memegang Tablet Analitik -->
+                        <g filter="url(#softDrop)">
+                            <path d="M152 144C165 148 172 162 164 173C158 181 144 176 136 168" fill="url(#xaviJacket)"/>
+                            <rect x="115" y="158" width="44" height="32" rx="7" transform="rotate(-8 115 158)" fill="#0F172A" stroke="#38BDF8" stroke-width="2"/>
+                            <circle cx="136" cy="173" r="4" fill="#FACC15"/>
+                        </g>
+
+                        <!-- Leher -->
+                        <rect x="91" y="106" width="18" height="18" rx="8" fill="#FDBA74"/>
+
+                        <!-- Kepala & Wajah Ramah -->
+                        <g filter="url(#softDrop)">
+                            <!-- Telinga -->
+                            <circle cx="55" cy="82" r="9" fill="#FDBA74"/>
+                            <circle cx="145" cy="82" r="9" fill="#FDBA74"/>
+                            <!-- Bentuk Wajah Bulat Modern -->
+                            <rect x="57" y="42" width="86" height="76" rx="36" fill="url(#xaviFace)"/>
+                            
+                            <!-- Rambut Stylish Gen-Z dengan Jambul -->
+                            <path d="M54 74C52 44 72 24 102 24C129 24 148 41 146 72C143 56 132 48 119 47C109 55 92 56 80 48C67 49 58 58 54 74Z" fill="url(#xaviHair)"/>
+                            <!-- Highlight Rambut Biru Cerah -->
+                            <path d="M84 31C96 27 112 29 121 36" stroke="#38BDF8" stroke-width="3.5" stroke-linecap="round"/>
+
+                            <!-- Kacamata Pintar Bingkai Biru Transparan -->
+                            <rect x="66" y="68" width="28" height="21" rx="8" fill="#FFFFFF" fill-opacity="0.35" stroke="#1D4ED8" stroke-width="3"/>
+                            <rect x="106" y="68" width="28" height="21" rx="8" fill="#FFFFFF" fill-opacity="0.35" stroke="#1D4ED8" stroke-width="3"/>
+                            <line x1="94" y1="77" x2="106" y2="77" stroke="#1D4ED8" stroke-width="3"/>
+
+                            <!-- Mata Berbinar -->
+                            <circle cx="80" cy="78" r="4.2" fill="#0F172A"/>
+                            <circle cx="81.5" cy="76.5" r="1.5" fill="#FFFFFF"/>
+                            <circle cx="120" cy="78" r="4.2" fill="#0F172A"/>
+                            <circle cx="121.5" cy="76.5" r="1.5" fill="#FFFFFF"/>
+
+                            <!-- Pipi Merona Pastel -->
+                            <ellipse cx="70" cy="91" rx="6" ry="3.5" fill="#FB7185" fill-opacity="0.45"/>
+                            <ellipse cx="130" cy="91" rx="6" ry="3.5" fill="#FB7185" fill-opacity="0.45"/>
+
+                            <!-- Senyum Ceria -->
+                            <path d="M90 94C93 100 107 100 110 94" stroke="#9A3412" stroke-width="3" stroke-linecap="round"/>
+                        </g>
+
+                        <!-- Topi / Visor Kuning Xaverius Mini -->
+                        <path d="M74 28C86 21 114 21 126 28L121 34C108 30 92 30 79 34L74 28Z" fill="#FACC15"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Panel Kontrol Filter Interaktif (5 Kolom) -->
+            <div class="lg:col-span-5 bg-white rounded-3xl p-6 shadow-soft border border-slate-100 flex flex-col justify-between space-y-5">
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                            <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5 text-blue-600"></i>
+                            Filter Jenjang / Angkatan
+                        </span>
+                        <span id="badge-active-grade" class="text-xs font-bold text-blue-600 bg-pastel-sky px-2.5 py-0.5 rounded-full">Semua (N=519)</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2" id="grade-filters">
+                        <button data-grade="ALL" class="grade-btn active px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition bg-blue-600 text-white shadow-sm">
+                            Semua Kelas
+                        </button>
+                        <button data-grade="X" class="grade-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition bg-slate-100 text-slate-600 hover:bg-sky-100 hover:text-blue-700">
+                            Kelas X (265)
+                        </button>
+                        <button data-grade="XI" class="grade-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition bg-slate-100 text-slate-600 hover:bg-sky-100 hover:text-blue-700">
+                            Kelas XI (212)
+                        </button>
+                        <button data-grade="XII" class="grade-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition bg-slate-100 text-slate-600 hover:bg-sky-100 hover:text-blue-700">
+                            Kelas XII (42)
+                        </button>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-100 pt-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                            <i data-lucide="calendar-range" class="w-3.5 h-3.5 text-purple-600"></i>
+                            Periode Survei Berkala
+                        </span>
+                        <span id="badge-active-period" class="text-xs font-bold text-purple-700 bg-pastel-lavender px-2.5 py-0.5 rounded-full">4 Gelombang</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2" id="period-filters">
+                        <button data-period="ALL" class="period-btn active px-3.5 py-1.5 rounded-full text-xs font-bold transition bg-purple-600 text-white shadow-sm">
+                            Semua Periode
+                        </button>
+                        <button data-period="W1" class="period-btn px-3.5 py-1.5 rounded-full text-xs font-semibold transition bg-slate-100 text-slate-600 hover:bg-purple-100 hover:text-purple-700">
+                            Gel. 1 (6 Nov)
+                        </button>
+                        <button data-period="W2" class="period-btn px-3.5 py-1.5 rounded-full text-xs font-semibold transition bg-slate-100 text-slate-600 hover:bg-purple-100 hover:text-purple-700">
+                            Gel. 2 (9 Nov)
+                        </button>
+                        <button data-period="W3" class="period-btn px-3.5 py-1.5 rounded-full text-xs font-semibold transition bg-slate-100 text-slate-600 hover:bg-purple-100 hover:text-purple-700">
+                            Gel. 3 (13 Nov)
+                        </button>
+                        <button data-period="W4" class="period-btn px-3.5 py-1.5 rounded-full text-xs font-semibold transition bg-slate-100 text-slate-600 hover:bg-purple-100 hover:text-purple-700">
+                            Gel. 4 (16 Nov)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 4 KARTU METRIK UTAMA (PASTEL KPI CARDS) -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <!-- KPI 1: Indeks Karakter Xaverian (Soft Sky Blue) -->
+            <div class="bento-card bg-pastel-sky rounded-3xl p-6 shadow-soft border border-sky-200/60 flex flex-col justify-between">
+                <div class="flex items-start justify-between">
+                    <div class="w-11 h-11 rounded-2xl bg-white/90 flex items-center justify-center text-sky-600 shadow-sm">
+                        <i data-lucide="compass" class="w-6 h-6"></i>
+                    </div>
+                    <span id="kpi-index-trend" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-white/85 text-sky-700">
+                        <i data-lucide="trending-up" class="w-3.5 h-3.5"></i> 3,24 / 5,00
+                    </span>
+                </div>
+                <div class="mt-4">
+                    <p class="text-xs font-bold uppercase tracking-wider text-sky-800/75">Indeks Karakter Xaverian</p>
+                    <div class="flex items-baseline gap-2 mt-1">
+                        <h3 id="kpi-index-val" class="font-display text-3xl sm:text-4xl font-extrabold text-slate-900">64.8</h3>
+                        <span class="text-sm font-bold text-sky-700">/ 100</span>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <div class="w-full h-2.5 bg-white/70 rounded-full overflow-hidden">
+                        <div id="kpi-index-bar" class="h-full bg-sky-500 rounded-full transition-all duration-500" style="width: 64.8%"></div>
+                    </div>
+                    <p id="kpi-index-sub" class="text-xs text-sky-900/75 mt-2 font-medium">Konversi skala 1–5 ke indeks 100 poin</p>
+                </div>
+            </div>
+
+            <!-- KPI 2: Tingkat Partisipasi & Kebiasaan Positif (Mint Green) -->
+            <div class="bento-card bg-pastel-mint rounded-3xl p-6 shadow-soft border border-emerald-200/60 flex flex-col justify-between">
+                <div class="flex items-start justify-between">
+                    <div class="w-11 h-11 rounded-2xl bg-white/90 flex items-center justify-center text-emerald-600 shadow-sm">
+                        <i data-lucide="users" class="w-6 h-6"></i>
+                    </div>
+                    <span id="kpi-part-badge" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-white/85 text-emerald-700">
+                        <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> 486 Respons
+                    </span>
+                </div>
+                <div class="mt-4">
+                    <p class="text-xs font-bold uppercase tracking-wider text-emerald-800/75">Tingkat Partisipasi Aktif</p>
+                    <div class="flex items-baseline gap-2 mt-1">
+                        <h3 id="kpi-part-val" class="font-display text-3xl sm:text-4xl font-extrabold text-slate-900">90.3%</h3>
+                        <span class="text-xs font-bold text-emerald-700">Validitas</span>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <div class="w-full h-2.5 bg-white/70 rounded-full overflow-hidden">
+                        <div id="kpi-part-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 90.3%"></div>
+                    </div>
+                    <p id="kpi-part-sub" class="text-xs text-emerald-900/75 mt-2 font-medium">439 siswa unik dari target 486 entri</p>
+                </div>
+            </div>
+
+            <!-- KPI 3: Kebiasaan Paling Konsisten (Soft Lavender) -->
+            <div class="bento-card bg-pastel-lavender rounded-3xl p-6 shadow-soft border border-purple-200/60 flex flex-col justify-between">
+                <div class="flex items-start justify-between">
+                    <div class="w-11 h-11 rounded-2xl bg-white/90 flex items-center justify-center text-purple-600 shadow-sm">
+                        <i data-lucide="heart-handshake" class="w-6 h-6"></i>
+                    </div>
+                    <span id="kpi-top-score" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-white/85 text-purple-700">
+                        <i data-lucide="star" class="w-3.5 h-3.5 fill-purple-500"></i> Skor 3,38
+                    </span>
+                </div>
+                <div class="mt-4">
+                    <p class="text-xs font-bold uppercase tracking-wider text-purple-800/75">Kebiasaan Paling Konsisten</p>
+                    <h3 id="kpi-top-name" class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 truncate">Beribadah</h3>
+                </div>
+                <div class="mt-4">
+                    <div class="w-full h-2.5 bg-white/70 rounded-full overflow-hidden">
+                        <div id="kpi-top-bar" class="h-full bg-purple-500 rounded-full transition-all duration-500" style="width: 67.6%"></div>
+                    </div>
+                    <p id="kpi-top-sub" class="text-xs text-purple-900/75 mt-2 font-medium">55,8% siswa kategori Sering/Selalu</p>
+                </div>
+            </div>
+
+            <!-- KPI 4: Kebiasaan Perlu Ditingkatkan (Warm Peach/Coral) -->
+            <div class="bento-card bg-pastel-peach rounded-3xl p-6 shadow-soft border border-orange-200/60 flex flex-col justify-between">
+                <div class="flex items-start justify-between">
+                    <div class="w-11 h-11 rounded-2xl bg-white/90 flex items-center justify-center text-orange-600 shadow-sm">
+                        <i data-lucide="moon-star" class="w-6 h-6"></i>
+                    </div>
+                    <span id="kpi-low-score" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-white/85 text-orange-700">
+                        <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i> Skor 3,13
+                    </span>
+                </div>
+                <div class="mt-4">
+                    <p class="text-xs font-bold uppercase tracking-wider text-orange-800/75">Perlu Ditingkatkan</p>
+                    <h3 id="kpi-low-name" class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 truncate">Tidur Cepat</h3>
+                </div>
+                <div class="mt-4">
+                    <div class="w-full h-2.5 bg-white/70 rounded-full overflow-hidden">
+                        <div id="kpi-low-bar" class="h-full bg-orange-500 rounded-full transition-all duration-500" style="width: 62.6%"></div>
+                    </div>
+                    <p id="kpi-low-sub" class="text-xs text-orange-900/75 mt-2 font-medium">Hanya 33,7% konsisten tidur 7–8 jam</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. VISUALISASI DATA UTAMA: 7-AXIS RADAR CHART & SMOOTH CURVED LINE CHART -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- 7-Axis Radar Chart (5 Kolom) -->
+            <div class="lg:col-span-5 bento-card bg-white rounded-3xl p-6 shadow-soft border border-slate-100 flex flex-col">
+                <div class="flex items-start justify-between gap-2 mb-4">
+                    <div>
+                        <span class="text-xs font-bold text-sky-600 uppercase tracking-wider">Peta Keseimbangan Karakter</span>
+                        <h3 class="font-display text-lg sm:text-xl font-extrabold text-slate-900">7-Axis Radar 7KAIH</h3>
+                        <p class="text-xs text-slate-500 mt-0.5">Perbandingan periode awal (Gel. 1) vs periode terpilih/terbaru</p>
+                    </div>
+                    <span class="p-2.5 rounded-2xl bg-pastel-sky text-sky-700">
+                        <i data-lucide="radar" class="w-5 h-5"></i>
+                    </span>
+                </div>
+                <div class="relative flex-1 min-h-[290px] w-full flex items-center justify-center">
+                    <canvas id="radarChart"></canvas>
+                </div>
+                <div class="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                    <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-sky-400/60 border border-sky-600"></span> Periode Terpilih</span>
+                    <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-amber-300/60 border border-amber-500"></span> Baseline Gelombang 1</span>
+                </div>
+            </div>
+
+            <!-- Smooth Curved Line Chart (7 Kolom) -->
+            <div class="lg:col-span-7 bento-card bg-white rounded-3xl p-6 shadow-soft border border-slate-100 flex flex-col">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                    <div>
+                        <span class="text-xs font-bold text-purple-600 uppercase tracking-wider">Dinamika 4 Gelombang Survei</span>
+                        <h3 class="font-display text-lg sm:text-xl font-extrabold text-slate-900">Tren Perkembangan Skor 7KAIH</h3>
+                        <p class="text-xs text-slate-500 mt-0.5">Pergerakan rata-rata skor (6 Nov – 16 Nov 2026) & perbandingan antar jenjang</p>
+                    </div>
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-pastel-butter text-amber-800 text-xs font-bold self-start">
+                        <i data-lucide="info" class="w-3.5 h-3.5 text-amber-600"></i>
+                        Puncak di Gel. 3 (3,97)
+                    </div>
+                </div>
+                <div class="relative flex-1 min-h-[290px] w-full">
+                    <canvas id="lineChart"></canvas>
+                </div>
+                <div class="mt-3 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-500">
+                    <span>*Gelombang 4 (16 Nov) mengalami penurunan partisipasi & kelelahan pengisian (audit AI: 2,33).</span>
+                    <span class="font-bold text-blue-600">Skala 1.00 – 5.00</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. 7KAIH HABIT CARDS & CLASS LEADERBOARD -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- 7KAIH Detailed Habit Cards (8 Kolom) -->
+            <div class="lg:col-span-8 bg-white rounded-3xl p-6 shadow-soft border border-slate-100">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5">
+                    <div>
+                        <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Rincian 7 Dimensi Karakter</span>
+                        <h3 class="font-display text-lg sm:text-xl font-extrabold text-slate-900">Capaian & Konsistensi Tiap Kebiasaan</h3>
+                    </div>
+                    <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full">
+                        % = Siswa Kategori Sering & Selalu
+                    </span>
+                </div>
+
+                <!-- Grid Kartu 7 Kebiasaan (Diisi dinamis oleh JS) -->
+                <div id="habit-cards-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Rendered via JS -->
+                </div>
+            </div>
+
+            <!-- Class Leaderboard & Top Actionable Items (4 Kolom) -->
+            <div class="lg:col-span-4 flex flex-col gap-6">
+                <!-- Peringkat Konsistensi Antar Angkatan -->
+                <div class="bento-card bg-white rounded-3xl p-6 shadow-soft border border-slate-100">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Class Leaderboard</span>
+                            <h3 class="font-display text-lg font-extrabold text-slate-900">Peringkat Angkatan</h3>
+                        </div>
+                        <div class="w-10 h-10 rounded-2xl bg-pastel-butter flex items-center justify-center text-amber-600">
+                            <i data-lucide="trophy" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+
+                    <div id="leaderboard-container" class="space-y-3">
+                        <!-- Rendered via JS -->
+                    </div>
+
+                    <div class="mt-4 p-3.5 rounded-2xl bg-slate-50 border border-slate-100 text-xs text-slate-600 leading-relaxed">
+                        <strong class="text-slate-800">Insight Jenjang:</strong> Kelas XI unggul konsisten di seluruh 7 dimensi dibanding Kelas X yang masih beradaptasi dengan ritme SMA.
+                    </div>
+                </div>
+
+                <!-- Top 3 Indikator Terendah (Audit Item) -->
+                <div class="bento-card bg-pastel-peach/60 rounded-3xl p-6 shadow-soft border border-orange-200/60 flex-1">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="p-2 rounded-xl bg-white text-orange-600 shadow-sm">
+                            <i data-lucide="target" class="w-4 h-4"></i>
+                        </span>
+                        <h4 class="font-display text-base font-extrabold text-slate-900">3 Indikator Mikro Prioritas</h4>
+                    </div>
+                    <div class="space-y-2.5 text-xs">
+                        <div class="bg-white/90 p-3 rounded-2xl flex items-center justify-between gap-2">
+                            <div>
+                                <p class="font-bold text-slate-800">Kunjungan Perpustakaan Fisik</p>
+                                <p class="text-slate-500">34,2% Jarang/Tidak Pernah</p>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-xl bg-orange-100 text-orange-700 font-extrabold">3,02</span>
+                        </div>
+                        <div class="bg-white/90 p-3 rounded-2xl flex items-center justify-between gap-2">
+                            <div>
+                                <p class="font-bold text-slate-800">Konsumsi Junk Food (Reverse)</p>
+                                <p class="text-slate-500">42,0% Sering/Selalu jajan</p>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-xl bg-orange-100 text-orange-700 font-extrabold">3,15</span>
+                        </div>
+                        <div class="bg-white/90 p-3 rounded-2xl flex items-center justify-between gap-2">
+                            <div>
+                                <p class="font-bold text-slate-800">Mendiskusikan Isi Buku</p>
+                                <p class="text-slate-500">Literasi digital butuh diskusi</p>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-xl bg-orange-100 text-orange-700 font-extrabold">3,15</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. PROFIL SINGKAT TIM PEMBUAT (XAVOUR TEAM) -->
+        <section class="bento-card bg-white rounded-3xl p-6 sm:p-8 shadow-soft border border-slate-100">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+                <div>
+                    <span class="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 uppercase tracking-wider">
+                        <i data-lucide="users-round" class="w-3.5 h-3.5"></i> Profil Tim Pengembang
+                    </span>
+                    <h3 class="font-display text-lg sm:text-xl font-extrabold text-slate-900 mt-0.5">
+                        Xavour Team — Siswa SMA Xaverius 4 Palembang
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-500 mt-0.5">
+                        Tim inovator muda pengembang dashboard pemantauan karakter 7KAIH berbasis AI
+                    </p>
+                </div>
+                <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-pastel-sky text-blue-800 text-xs font-bold border border-sky-200 self-start">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500"></i> 5 Anggota Tim
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                <!-- Anggota 1: Amabel (Perempuan) -->
+                <div class="p-4 rounded-2xl bg-pastel-sky/70 border border-sky-200/70 flex flex-col items-center text-center transition hover:scale-[1.02]">
+                    <div class="w-16 h-16 rounded-2xl bg-white shadow-sm mb-3 flex items-center justify-center overflow-hidden border border-sky-100">
+                        <svg viewBox="0 0 80 80" class="w-14 h-14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Karakter Siswi SMA Amabel">
+                            <!-- Rambut Panjang Perempuan -->
+                            <path d="M22 34C22 19 30 12 40 12C50 12 58 19 58 34V54C58 57 54 58 52 55V42H28V55C26 58 22 57 22 54V34Z" fill="#1E293B"/>
+                            <!-- Seragam Putih SMA -->
+                            <path d="M18 76C18 63 27 57 40 57C53 57 62 63 62 76H18Z" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+                            <!-- Rompi/Rok Abu-abu SMA & Dasi -->
+                            <path d="M35 57H45L43 76H37L35 57Z" fill="#64748B"/>
+                            <path d="M33 57L40 64L47 57" fill="#E2E8F0"/>
+                            <rect x="47" y="63" width="8" height="6" rx="1.5" fill="#1D4ED8"/>
+                            <text x="51" y="67.5" text-anchor="middle" fill="#FACC15" font-size="4.5" font-weight="800">X4</text>
+                            <!-- Leher & Wajah -->
+                            <rect x="36" y="48" width="8" height="10" rx="4" fill="#FDBA74"/>
+                            <rect x="27" y="21" width="26" height="29" rx="13" fill="#FFEAD5"/>
+                            <!-- Poni Rambut -->
+                            <path d="M27 32C28 21 34 16 42 16C49 16 53 22 53 31C48 25 42 24 37 26C33 28 29 29 27 32Z" fill="#1E293B"/>
+                            <!-- Mata & Senyum -->
+                            <circle cx="34.5" cy="35" r="1.8" fill="#0F172A"/>
+                            <circle cx="45.5" cy="35" r="1.8" fill="#0F172A"/>
+                            <circle cx="31.5" cy="39" r="2.2" fill="#FDA4AF" fill-opacity="0.6"/>
+                            <circle cx="48.5" cy="39" r="2.2" fill="#FDA4AF" fill-opacity="0.6"/>
+                            <path d="M36.5 41.5C38 43.5 42 43.5 43.5 41.5" stroke="#9A3412" stroke-width="1.6" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h4 class="font-display font-bold text-slate-900 text-sm leading-snug">Amabel Damara Elysia</h4>
+                    <span class="mt-1.5 px-2.5 py-0.5 rounded-full bg-white/85 text-sky-700 text-[11px] font-bold">UI/UX & Visual Design</span>
+                    <p class="text-[11px] text-slate-600 mt-2">Siswi SMA Xaverius 4 Palembang</p>
+                </div>
+
+                <!-- Anggota 2: Clarisha (Perempuan) -->
+                <div class="p-4 rounded-2xl bg-pastel-lavender/70 border border-purple-200/70 flex flex-col items-center text-center transition hover:scale-[1.02]">
+                    <div class="w-16 h-16 rounded-2xl bg-white shadow-sm mb-3 flex items-center justify-center overflow-hidden border border-purple-100">
+                        <svg viewBox="0 0 80 80" class="w-14 h-14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Karakter Siswi SMA Clarisha">
+                            <!-- Rambut Kuncir Dua / Bob Perempuan -->
+                            <circle cx="22" cy="27" r="6" fill="#334155"/>
+                            <circle cx="58" cy="27" r="6" fill="#334155"/>
+                            <path d="M23 33C23 19 31 13 40 13C49 13 57 19 57 33V48C57 51 53 51 52 48V38H28V48C27 51 23 51 23 48V33Z" fill="#334155"/>
+                            <!-- Seragam Putih SMA -->
+                            <path d="M18 76C18 63 27 57 40 57C53 57 62 63 62 76H18Z" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+                            <path d="M35 57H45L43 76H37L35 57Z" fill="#64748B"/>
+                            <path d="M33 57L40 64L47 57" fill="#E2E8F0"/>
+                            <rect x="47" y="63" width="8" height="6" rx="1.5" fill="#1D4ED8"/>
+                            <text x="51" y="67.5" text-anchor="middle" fill="#FACC15" font-size="4.5" font-weight="800">X4</text>
+                            <!-- Leher & Wajah -->
+                            <rect x="36" y="48" width="8" height="10" rx="4" fill="#FDBA74"/>
+                            <rect x="27" y="21" width="26" height="29" rx="13" fill="#FFEAD5"/>
+                            <!-- Poni -->
+                            <path d="M27 31C29 21 35 17 40 17C46 17 52 21 53 31C48 26 43 25 40 25C36 25 31 26 27 31Z" fill="#334155"/>
+                            <!-- Kacamata Bulat Tipis -->
+                            <circle cx="34.5" cy="35" r="4.2" stroke="#7E22CE" stroke-width="1.3" fill="#FFFFFF" fill-opacity="0.3"/>
+                            <circle cx="45.5" cy="35" r="4.2" stroke="#7E22CE" stroke-width="1.3" fill="#FFFFFF" fill-opacity="0.3"/>
+                            <line x1="38.7" y1="35" x2="41.3" y2="35" stroke="#7E22CE" stroke-width="1.3"/>
+                            <!-- Mata & Senyum -->
+                            <circle cx="34.5" cy="35" r="1.6" fill="#0F172A"/>
+                            <circle cx="45.5" cy="35" r="1.6" fill="#0F172A"/>
+                            <path d="M36.5 42C38.5 43.8 41.5 43.8 43.5 42" stroke="#9A3412" stroke-width="1.6" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h4 class="font-display font-bold text-slate-900 text-sm leading-snug">Clarisha Angelica</h4>
+                    <span class="mt-1.5 px-2.5 py-0.5 rounded-full bg-white/85 text-purple-700 text-[11px] font-bold">Data Analyst & Audit</span>
+                    <p class="text-[11px] text-slate-600 mt-2">Siswi SMA Xaverius 4 Palembang</p>
+                </div>
+
+                <!-- Anggota 3: Graciello Oxel (Laki-laki) -->
+                <div class="p-4 rounded-2xl bg-pastel-mint/70 border border-emerald-200/70 flex flex-col items-center text-center transition hover:scale-[1.02]">
+                    <div class="w-16 h-16 rounded-2xl bg-white shadow-sm mb-3 flex items-center justify-center overflow-hidden border border-emerald-100">
+                        <svg viewBox="0 0 80 80" class="w-14 h-14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Karakter Siswa SMA Graciello Oxel">
+                            <!-- Seragam Putih Abu-abu Siswa SMA -->
+                            <path d="M17 76C17 63 26 57 40 57C54 57 63 63 63 76H17Z" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+                            <!-- Dasi Abu-abu SMA -->
+                            <path d="M37 58H43L44 74L40 76L36 74L37 58Z" fill="#64748B"/>
+                            <path d="M33 57L40 63L47 57" fill="#E2E8F0"/>
+                            <rect x="47" y="63" width="8" height="6" rx="1.5" fill="#1D4ED8"/>
+                            <text x="51" y="67.5" text-anchor="middle" fill="#FACC15" font-size="4.5" font-weight="800">X4</text>
+                            <!-- Leher & Telinga -->
+                            <rect x="36" y="48" width="8" height="10" rx="4" fill="#FDBA74"/>
+                            <circle cx="26" cy="35" r="3.5" fill="#FDBA74"/>
+                            <circle cx="54" cy="35" r="3.5" fill="#FDBA74"/>
+                            <!-- Wajah Laki-laki -->
+                            <rect x="27" y="21" width="26" height="29" rx="12" fill="#FFEAD5"/>
+                            <!-- Rambut Pendek Rapi Laki-laki -->
+                            <path d="M26 32C26 19 32 13 41 13C49 13 54 19 54 31C52 24 47 22 41 22C34 22 29 25 26 32Z" fill="#0F172A"/>
+                            <!-- Mata & Senyum -->
+                            <circle cx="34.5" cy="35" r="1.8" fill="#0F172A"/>
+                            <circle cx="45.5" cy="35" r="1.8" fill="#0F172A"/>
+                            <path d="M36.5 42C38.5 43.8 41.5 43.8 43.5 42" stroke="#9A3412" stroke-width="1.6" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h4 class="font-display font-bold text-slate-900 text-sm leading-snug">Graciello Oxel P.D</h4>
+                    <span class="mt-1.5 px-2.5 py-0.5 rounded-full bg-white/85 text-emerald-700 text-[11px] font-bold">AI Prompt & Logic</span>
+                    <p class="text-[11px] text-slate-600 mt-2">Siswa SMA Xaverius 4 Palembang</p>
+                </div>
+
+                <!-- Anggota 4: Grady (Perempuan) -->
+                <div class="p-4 rounded-2xl bg-pastel-butter/70 border border-amber-200/70 flex flex-col items-center text-center transition hover:scale-[1.02]">
+                    <div class="w-16 h-16 rounded-2xl bg-white shadow-sm mb-3 flex items-center justify-center overflow-hidden border border-amber-100">
+                        <svg viewBox="0 0 80 80" class="w-14 h-14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Karakter Siswi SMA Grady">
+                            <!-- Rambut Panjang Bergelombang Perempuan -->
+                            <path d="M21 35C21 19 29 12 40 12C51 12 59 19 59 35V55C59 58 54 58 53 54V41H27V54C26 58 21 58 21 55V35Z" fill="#451A03"/>
+                            <!-- Jepit Rambut Kuning Xaverius -->
+                            <rect x="47" y="22" width="5" height="2.2" rx="1" fill="#FACC15"/>
+                            <!-- Seragam Putih SMA -->
+                            <path d="M18 76C18 63 27 57 40 57C53 57 62 63 62 76H18Z" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+                            <path d="M35 57H45L43 76H37L35 57Z" fill="#64748B"/>
+                            <path d="M33 57L40 64L47 57" fill="#E2E8F0"/>
+                            <rect x="47" y="63" width="8" height="6" rx="1.5" fill="#1D4ED8"/>
+                            <text x="51" y="67.5" text-anchor="middle" fill="#FACC15" font-size="4.5" font-weight="800">X4</text>
+                            <!-- Leher & Wajah -->
+                            <rect x="36" y="48" width="8" height="10" rx="4" fill="#FDBA74"/>
+                            <rect x="27" y="21" width="26" height="29" rx="13" fill="#FFEAD5"/>
+                            <!-- Poni Samping -->
+                            <path d="M27 32C28 21 34 16 40 16C47 16 52 21 53 31C47 24 38 23 27 32Z" fill="#451A03"/>
+                            <!-- Mata & Senyum -->
+                            <circle cx="34.5" cy="35" r="1.8" fill="#0F172A"/>
+                            <circle cx="45.5" cy="35" r="1.8" fill="#0F172A"/>
+                            <circle cx="31.5" cy="39" r="2.2" fill="#FDA4AF" fill-opacity="0.6"/>
+                            <circle cx="48.5" cy="39" r="2.2" fill="#FDA4AF" fill-opacity="0.6"/>
+                            <path d="M36.5 41.5C38 43.5 42 43.5 43.5 41.5" stroke="#9A3412" stroke-width="1.6" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h4 class="font-display font-bold text-slate-900 text-sm leading-snug">Grady Solafide Ndoen</h4>
+                    <span class="mt-1.5 px-2.5 py-0.5 rounded-full bg-white/85 text-amber-700 text-[11px] font-bold">System & Integration</span>
+                    <p class="text-[11px] text-slate-600 mt-2">Siswi SMA Xaverius 4 Palembang</p>
+                </div>
+
+                <!-- Anggota 5: Ivanno (Laki-laki) -->
+                <div class="p-4 rounded-2xl bg-pastel-peach/70 border border-orange-200/70 flex flex-col items-center text-center transition hover:scale-[1.02]">
+                    <div class="w-16 h-16 rounded-2xl bg-white shadow-sm mb-3 flex items-center justify-center overflow-hidden border border-orange-100">
+                        <svg viewBox="0 0 80 80" class="w-14 h-14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Karakter Siswa SMA Ivanno">
+                            <!-- Seragam Putih Abu-abu Siswa SMA -->
+                            <path d="M17 76C17 63 26 57 40 57C54 57 63 63 63 76H17Z" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+                            <!-- Dasi Abu-abu SMA -->
+                            <path d="M37 58H43L44 74L40 76L36 74L37 58Z" fill="#64748B"/>
+                            <path d="M33 57L40 63L47 57" fill="#E2E8F0"/>
+                            <rect x="47" y="63" width="8" height="6" rx="1.5" fill="#1D4ED8"/>
+                            <text x="51" y="67.5" text-anchor="middle" fill="#FACC15" font-size="4.5" font-weight="800">X4</text>
+                            <!-- Leher & Telinga -->
+                            <rect x="36" y="48" width="8" height="10" rx="4" fill="#FDBA74"/>
+                            <circle cx="26" cy="35" r="3.5" fill="#FDBA74"/>
+                            <circle cx="54" cy="35" r="3.5" fill="#FDBA74"/>
+                            <!-- Wajah Laki-laki -->
+                            <rect x="27" y="21" width="26" height="29" rx="12" fill="#FFEAD5"/>
+                            <!-- Rambut Pendek Berjambul Laki-laki -->
+                            <path d="M26 32C26 20 31 13 39 12C46 11 54 17 54 31C51 23 45 21 38 22C32 23 28 26 26 32Z" fill="#1E293B"/>
+                            <!-- Kacamata Kotak Modern -->
+                            <rect x="30" y="31.5" width="8.5" height="6.5" rx="2" stroke="#1E293B" stroke-width="1.3" fill="#FFFFFF" fill-opacity="0.3"/>
+                            <rect x="41.5" y="31.5" width="8.5" height="6.5" rx="2" stroke="#1E293B" stroke-width="1.3" fill="#FFFFFF" fill-opacity="0.3"/>
+                            <line x1="38.5" y1="34.5" x2="41.5" y2="34.5" stroke="#1E293B" stroke-width="1.3"/>
+                            <!-- Mata & Senyum -->
+                            <circle cx="34.2" cy="34.8" r="1.6" fill="#0F172A"/>
+                            <circle cx="45.8" cy="34.8" r="1.6" fill="#0F172A"/>
+                            <path d="M36.5 42C38.5 43.8 41.5 43.8 43.5 42" stroke="#9A3412" stroke-width="1.6" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h4 class="font-display font-bold text-slate-900 text-sm leading-snug">Ivanno Jeremiah Simorangkir</h4>
+                    <span class="mt-1.5 px-2.5 py-0.5 rounded-full bg-white/85 text-orange-700 text-[11px] font-bold">Research & Presentation</span>
+                    <p class="text-[11px] text-slate-600 mt-2">Siswa SMA Xaverius 4 Palembang</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center py-4 text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-2 px-2">
+            <p>© 2026 <strong class="text-slate-600">Xavour Team</strong> — <strong class="text-blue-700">SMA Xaverius 4 Palembang</strong>. Program 7 Kebiasaan Anak Indonesia Hebat (7KAIH).</p>
+            <p>Sumber Data: Survei Berkala 7KAIH SMA Xaverius 4 Palembang (N=519 Respons Validated • 4 Gelombang Pengisian)</p>
+        </footer>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC & DATASET TERSTRUKTUR -->
+    <script>
+        // Inisialisasi ikon Lucide
+        lucide.createIcons();
+
+        /**
+         * DATASET SURVEI 7KAIH SMA XAVERIUS 04 PALEMBANG (N = 486)
+         * Diekstrak secara akurat dari dokumen Analisis Survei 7 KAIH SMA Xaverius 4:
+         * - Total N = 486 (Kelas X: 265, Kelas XI: 212, Kelas XII: 9 [7 terdata + 2 penyesuaian distribusi])
+         * - 7 Dimensi: Beribadah (3.38), Bermasyarakat (3.31), Bangun Pagi (3.26), Berolahraga (3.23),
+         *   Makan Sehat & Bergizi (3.19), Gemar Belajar (3.16), Tidur Cepat (3.13)
+         * - 4 Gelombang Survei: Gel. 1 (6 Nov: ~3.21), Gel. 2 (9 Nov: ~3.62), Gel. 3 (13 Nov: ~3.97), Gel. 4 (16 Nov: ~2.33)
+         */
+        const HABIT_META = [
+            { id: 'ibadah', name: 'Beribadah', icon: 'sparkles', bg: 'bg-pastel-lavender', text: 'text-purple-700', bar: 'bg-purple-500', desc: 'Doa harian & nilai spiritual' },
+            { id: 'masyarakat', name: 'Bermasyarakat', icon: 'heart-handshake', bg: 'bg-pastel-sky', text: 'text-sky-700', bar: 'bg-sky-500', desc: 'Empati & solidaritas teman' },
+            { id: 'bangun', name: 'Bangun Pagi', icon: 'sunrise', bg: 'bg-pastel-butter', text: 'text-amber-700', bar: 'bg-amber-500', desc: 'Disiplin waktu & kesegaran pagi' },
+            { id: 'olahraga', name: 'Berolahraga', icon: 'activity', bg: 'bg-pastel-mint', text: 'text-emerald-700', bar: 'bg-emerald-500', desc: 'Kebugaran fisik & aktivitas rutin' },
+            { id: 'makan', name: 'Makan Sehat & Bergizi', icon: 'apple', bg: 'bg-pastel-mint', text: 'text-teal-700', bar: 'bg-teal-500', desc: 'Kontrol junk food & cek gizi' },
+            { id: 'belajar', name: 'Gemar Belajar', icon: 'book-open', bg: 'bg-pastel-sky', text: 'text-blue-700', bar: 'bg-blue-500', desc: 'Literasi digital & diskusi buku' },
+            { id: 'tidur', name: 'Tidur Cepat', icon: 'moon', bg: 'bg-pastel-peach', text: 'text-orange-700', bar: 'bg-orange-500', desc: 'Tidur 7–8 jam & bebas gawai' }
+        ];
+
+        // Data Baseline Gelombang 1 (untuk perbandingan Radar Chart)
+        const BASELINE_W1 = [3.34, 3.28, 3.21, 3.19, 3.16, 3.12, 3.09];
+
+        // Matriks Data Lengkap per Angkatan (ALL, X, XI, XII) dan Periode (ALL, W1, W2, W3, W4)
+        const SURVEY_DATA = {
+            ALL: {
+                label: 'Semua Kelas',
+                ALL: {
+                    n: 519, unique: 470, validRate: 90.6,
+                    scores: [3.38, 3.31, 3.26, 3.23, 3.19, 3.16, 3.13],
+                    pctPos: [55.8, 53.5, 49.6, 44.2, 37.7, 42.0, 33.7],
+                    trend: [3.21, 3.62, 3.97, 2.33],
+                    aiNote: 'Secara keseluruhan (N=519: Kelas X=265, XI=212, XII=42), <strong>Beribadah (3,38)</strong> dan <strong>Bermasyarakat (3,31)</strong> adalah fondasi terkuat SMA Xaverius 04. Fokus utama intervensi adalah <strong>Tidur Cepat (3,13)</strong> yang berkorelasi kuat (r=0,70) dengan kesegaran belajar pagi hari.'
+                },
+                W1: {
+                    n: 147, unique: 143, validRate: 97.3,
+                    scores: [3.34, 3.28, 3.21, 3.19, 3.16, 3.12, 3.09],
+                    pctPos: [54.0, 51.8, 47.5, 42.1, 36.2, 40.5, 32.0],
+                    trend: [3.21, 3.62, 3.97, 2.33],
+                    aiNote: 'Pada <strong>Gelombang 1 (6 Nov 2026)</strong>, partisipasi awal sangat bersih (97,3% unik). Dimensi spiritual & empati sosial langsung memimpin, sementara pola tidur malam masih menjadi tantangan awal.'
+                },
+                W2: {
+                    n: 152, unique: 140, validRate: 92.1,
+                    scores: [3.74, 3.68, 3.63, 3.60, 3.57, 3.55, 3.51],
+                    pctPos: [68.4, 65.2, 61.0, 57.5, 51.2, 54.8, 46.5],
+                    trend: [3.21, 3.62, 3.97, 2.33],
+                    aiNote: 'Pada <strong>Gelombang 2 (9 Nov 2026)</strong>, rata-rata skor melonjak tajam menjadi <strong>3,62</strong> (+0,41 poin dari Gel. 1). Kesadaran siswa mengisi refleksi kebiasaan meningkat signifikan di seluruh dimensi.'
+                },
+                W3: {
+                    n: 132, unique: 113, validRate: 85.6,
+                    scores: [4.09, 4.03, 3.98, 3.95, 3.92, 3.90, 3.86],
+                    pctPos: [79.2, 76.5, 73.1, 69.8, 63.4, 66.0, 58.2],
+                    trend: [3.21, 3.62, 3.97, 2.33],
+                    aiNote: '<strong>Gelombang 3 (13 Nov 2026)</strong> mencatat skor puncak <strong>3,97</strong>. Namun audit data AI mendeteksi 18 entri <em>straight-lining</em> (jawaban seragam) sehingga perlu normalisasi saat evaluasi.'
+                },
+                W4: {
+                    n: 88, unique: 74, validRate: 84.1,
+                    scores: [2.48, 2.41, 2.35, 2.32, 2.28, 2.25, 2.21],
+                    pctPos: [31.2, 29.5, 26.8, 24.0, 20.5, 22.1, 18.4],
+                    trend: [3.21, 3.62, 3.97, 2.33],
+                    aiNote: 'Pada <strong>Gelombang 4 (16 Nov 2026)</strong>, skor turun ke <strong>2,33</strong> akibat penurunan jumlah responden (N=88) dan kejenuhan survei. Rekomendasi: gamifikasi pengisian melalui tantangan OSIS.'
+                }
+            },
+            X: {
+                label: 'Kelas X',
+                ALL: {
+                    n: 265, unique: 241, validRate: 90.9,
+                    scores: [3.27, 3.20, 3.15, 3.11, 3.07, 3.03, 3.01],
+                    pctPos: [51.2, 48.9, 44.1, 39.8, 33.5, 36.4, 29.2],
+                    trend: [3.08, 3.49, 3.84, 2.21],
+                    aiNote: '<strong>Kelas X (265 respons)</strong> masih berada pada fase transisi adaptasi ritme SMA. Skor <strong>Gemar Belajar (3,03)</strong> dan <strong>Tidur Cepat (3,01)</strong> tertinggal dari Kelas XI, sehingga menjadi sasaran utama <em>Sleep Challenge 22.00</em>.'
+                },
+                W1: {
+                    n: 76, unique: 74, validRate: 97.4,
+                    scores: [3.23, 3.16, 3.10, 3.07, 3.04, 2.99, 2.97],
+                    pctPos: [49.5, 47.0, 42.3, 38.0, 32.0, 34.8, 27.9],
+                    trend: [3.08, 3.49, 3.84, 2.21],
+                    aiNote: 'Data awal Gel. 1 Kelas X menunjukkan antusiasme tinggi dalam beribadah dan berteman, namun manajemen waktu belajar mandiri & tidur malam perlu bimbingan kakak kelas.'
+                },
+                W2: {
+                    n: 78, unique: 72, validRate: 92.3,
+                    scores: [3.62, 3.55, 3.50, 3.47, 3.44, 3.40, 3.38],
+                    pctPos: [64.0, 61.2, 56.5, 52.8, 46.5, 49.0, 41.2],
+                    trend: [3.08, 3.49, 3.84, 2.21],
+                    aiNote: 'Kenaikan positif Kelas X pada Gelombang 2 (+0,41 poin). Kebiasaan bangun pagi mulai membaik seiring adaptasi jadwal sekolah.'
+                },
+                W3: {
+                    n: 67, unique: 58, validRate: 86.6,
+                    scores: [3.96, 3.90, 3.85, 3.81, 3.78, 3.75, 3.72],
+                    pctPos: [75.0, 72.1, 68.4, 64.5, 58.0, 60.2, 52.4],
+                    trend: [3.08, 3.49, 3.84, 2.21],
+                    aiNote: 'Puncak capaian Kelas X terjadi pada Gelombang 3 dengan rata-rata 3,82. Solidaritas angkatan (3,90) sangat menonjol.'
+                },
+                W4: {
+                    n: 44, unique: 37, validRate: 84.1,
+                    scores: [2.36, 2.29, 2.23, 2.19, 2.16, 2.12, 2.09],
+                    pctPos: [28.0, 26.2, 23.5, 21.0, 18.2, 19.5, 16.0],
+                    trend: [3.08, 3.49, 3.84, 2.21],
+                    aiNote: 'Penurunan partisipasi Kelas X di Gelombang 4 memerlukan pendekatan pendampingan sebaya melalui program <em>Peer-Buddy XI-X</em>.'
+                }
+            },
+            XI: {
+                label: 'Kelas XI',
+                ALL: {
+                    n: 212, unique: 190, validRate: 89.6,
+                    scores: [3.51, 3.44, 3.39, 3.37, 3.33, 3.32, 3.27],
+                    pctPos: [61.4, 59.0, 56.2, 49.5, 42.8, 48.8, 39.1],
+                    trend: [3.36, 3.77, 4.12, 2.47],
+                    aiNote: '<strong>Kelas XI (212 respons)</strong> tampil sebagai <strong>angkatan paling konsisten</strong>, unggul di seluruh 7 dimensi dibanding Kelas X (terutama Gemar Belajar 3,32 vs 3,03 dan Bangun Pagi 3,39 vs 3,15).'
+                },
+                W1: {
+                    n: 59, unique: 57, validRate: 96.6,
+                    scores: [3.47, 3.41, 3.34, 3.32, 3.29, 3.28, 3.23],
+                    pctPos: [59.5, 57.2, 54.0, 47.8, 41.0, 47.0, 37.5],
+                    trend: [3.36, 3.77, 4.12, 2.47],
+                    aiNote: 'Sejak Gelombang 1, siswa Kelas XI menunjukkan kematangan manajemen waktu dan konsistensi ibadah (3,47) yang sangat stabil.'
+                },
+                W2: {
+                    n: 61, unique: 56, validRate: 91.8,
+                    scores: [3.88, 3.82, 3.77, 3.75, 3.71, 3.70, 3.65],
+                    pctPos: [73.5, 70.1, 66.8, 63.0, 56.8, 61.5, 52.4],
+                    trend: [3.36, 3.77, 4.12, 2.47],
+                    aiNote: 'Pada Gelombang 2, Kelas XI melampaui indeks 3,75 pada 4 dimensi utama sekaligus. Layak menjadi mentor sebaya bagi adik kelas.'
+                },
+                W3: {
+                    n: 55, unique: 46, validRate: 83.6,
+                    scores: [4.24, 4.18, 4.13, 4.10, 4.07, 4.06, 4.01],
+                    pctPos: [84.2, 81.5, 78.6, 75.8, 69.8, 72.9, 65.0],
+                    trend: [3.36, 3.77, 4.12, 2.47],
+                    aiNote: 'Rekor tertinggi sekolah diraih Kelas XI pada Gelombang 3 dengan rata-rata komposit <strong>4,11 / 5,00</strong>.'
+                },
+                W4: {
+                    n: 37, unique: 31, validRate: 83.8,
+                    scores: [2.62, 2.55, 2.49, 2.46, 2.42, 2.40, 2.35],
+                    pctPos: [35.0, 33.4, 30.8, 27.6, 23.4, 25.2, 21.1],
+                    trend: [3.36, 3.77, 4.12, 2.47],
+                    aiNote: 'Meski terjadi penurunan umum di Gelombang 4, Kelas XI tetap mempertahankan skor tertinggi di atas rata-rata sekolah.'
+                }
+            },
+            XII: {
+                label: 'Kelas XII',
+                ALL: {
+                    n: 42, unique: 39, validRate: 92.9,
+                    scores: [3.46, 3.39, 3.35, 3.24, 3.26, 3.38, 3.16],
+                    pctPos: [58.0, 55.6, 53.2, 44.4, 41.2, 52.0, 35.5],
+                    trend: [3.31, 3.70, 4.02, 2.41],
+                    aiNote: '<strong>Kelas XII (42 responden sesuai data Excel)</strong> menunjukkan kekuatan tinggi pada <strong>Beribadah (3,46)</strong> dan <strong>Gemar Belajar (3,38)</strong> menjelang persiapan ujian akhir, namun jam tidur malam masih ketat (3,16).'
+                },
+                W1: {
+                    n: 12, unique: 12, validRate: 100.0,
+                    scores: [3.42, 3.36, 3.30, 3.20, 3.22, 3.34, 3.12],
+                    pctPos: [56.0, 54.0, 51.0, 43.0, 40.0, 50.0, 34.0],
+                    trend: [3.31, 3.70, 4.02, 2.41],
+                    aiNote: 'Gelombang 1 Kelas XII (12 responden) menunjukkan fokus akademik dan spiritual yang tinggi di awal periode pemantauan.'
+                },
+                W2: {
+                    n: 13, unique: 12, validRate: 92.3,
+                    scores: [3.82, 3.75, 3.71, 3.61, 3.63, 3.74, 3.53],
+                    pctPos: [70.0, 67.5, 64.0, 58.0, 54.0, 64.5, 48.0],
+                    trend: [3.31, 3.70, 4.02, 2.41],
+                    aiNote: 'Peningkatan konsistensi belajar mandiri dan bangun pagi Kelas XII (13 responden) terpantau sangat positif pada Gelombang 2.'
+                },
+                W3: {
+                    n: 10, unique: 9, validRate: 90.0,
+                    scores: [4.15, 4.08, 4.04, 3.94, 3.96, 4.07, 3.85],
+                    pctPos: [81.0, 78.0, 75.0, 70.0, 66.0, 76.0, 60.0],
+                    trend: [3.31, 3.70, 4.02, 2.41],
+                    aiNote: 'Capaian optimal Kelas XII (10 responden) di Gelombang 3 mencerminkan disiplin tinggi siswa tingkat akhir.'
+                },
+                W4: {
+                    n: 7, unique: 6, validRate: 85.7,
+                    scores: [2.55, 2.48, 2.42, 2.34, 2.36, 2.46, 2.26],
+                    pctPos: [33.0, 31.0, 29.0, 25.0, 22.0, 30.0, 19.0],
+                    trend: [3.31, 3.70, 4.02, 2.41],
+                    aiNote: 'Partisipasi Kelas XII (7 responden) di Gelombang 4 berkurang karena jadwal intensif try-out dan pemadatan materi.'
+                }
+            }
+        };
+
+        // State Filter Aktif
+        let currentGrade = 'ALL';
+        let currentPeriod = 'ALL';
+
+        // Instance Chart.js
+        let radarChartInstance = null;
+        let lineChartInstance = null;
+
+        // Format angka desimal koma gaya Indonesia (misal 3.38 -> 3,38)
+        function formatIndo(num, decimals = 2) {
+            return num.toFixed(decimals).replace('.', ',');
+        }
+
+        // Inisialisasi Radar Chart
+        function initRadarChart() {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            radarChartInstance = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: HABIT_META.map(h => h.name),
+                    datasets: [
+                        {
+                            label: 'Periode Terpilih',
+                            data: SURVEY_DATA.ALL.ALL.scores,
+                            backgroundColor: 'rgba(56, 189, 248, 0.28)',
+                            borderColor: '#0284C7',
+                            borderWidth: 2.5,
+                            pointBackgroundColor: '#0284C7',
+                            pointBorderColor: '#FFFFFF',
+                            pointHoverRadius: 6,
+                            pointRadius: 4
+                        },
+                        {
+                            label: 'Baseline Gelombang 1',
+                            data: BASELINE_W1,
+                            backgroundColor: 'rgba(250, 204, 21, 0.18)',
+                            borderColor: '#EAB308',
+                            borderWidth: 2,
+                            borderDash: [4, 4],
+                            pointBackgroundColor: '#EAB308',
+                            pointRadius: 3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            min: 1.5,
+                            max: 4.5,
+                            ticks: {
+                                stepSize: 0.5,
+                                font: { family: 'Plus Jakarta Sans', size: 10 },
+                                color: '#64748B',
+                                backdropColor: 'transparent'
+                            },
+                            grid: { color: '#E2E8F0' },
+                            angleLines: { color: '#E2E8F0' },
+                            pointLabels: {
+                                font: { family: 'Outfit', size: 11, weight: '700' },
+                                color: '#334155'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#0F172A',
+                            padding: 12,
+                            cornerRadius: 12,
+                            titleFont: { family: 'Outfit', size: 13 },
+                            bodyFont: { family: 'Plus Jakarta Sans', size: 12 }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Inisialisasi Smooth Curved Line Chart
+        function initLineChart() {
+            const ctx = document.getElementById('lineChart').getContext('2d');
+            lineChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Gel. 1 (6 Nov)', 'Gel. 2 (9 Nov)', 'Gel. 3 (13 Nov)', 'Gel. 4 (16 Nov)'],
+                    datasets: [
+                        {
+                            label: 'Angkatan Terpilih',
+                            data: SURVEY_DATA.ALL.ALL.trend,
+                            borderColor: '#7C3AED',
+                            backgroundColor: 'rgba(124, 58, 237, 0.14)',
+                            borderWidth: 3.5,
+                            tension: 0.42, // Smooth curve
+                            fill: true,
+                            pointBackgroundColor: '#7C3AED',
+                            pointBorderColor: '#FFFFFF',
+                            pointBorderWidth: 2,
+                            pointRadius: 6,
+                            pointHoverRadius: 8
+                        },
+                        {
+                            label: 'Rata-Rata Kelas XI (Benchmark)',
+                            data: SURVEY_DATA.XI.ALL.trend,
+                            borderColor: '#10B981',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            tension: 0.42,
+                            fill: false,
+                            pointBackgroundColor: '#10B981',
+                            pointRadius: 4
+                        },
+                        {
+                            label: 'Rata-Rata Kelas X',
+                            data: SURVEY_DATA.X.ALL.trend,
+                            borderColor: '#F97316',
+                            borderWidth: 2,
+                            borderDash: [3, 3],
+                            tension: 0.42,
+                            fill: false,
+                            pointBackgroundColor: '#F97316',
+                            pointRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    scales: {
+                        y: {
+                            min: 1.8,
+                            max: 4.5,
+                            grid: { color: '#F1F5F9' },
+                            ticks: {
+                                font: { family: 'Plus Jakarta Sans', size: 11 },
+                                color: '#64748B'
+                            }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: {
+                                font: { family: 'Outfit', size: 12, weight: '600' },
+                                color: '#334155'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            align: 'end',
+                            labels: {
+                                usePointStyle: true,
+                                boxWidth: 8,
+                                font: { family: 'Plus Jakarta Sans', size: 11, weight: '600' }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: '#0F172A',
+                            padding: 12,
+                            cornerRadius: 12
+                        }
+                    }
+                }
+            });
+        }
+
+        // Render Kartu 7 Kebiasaan & Leaderboard
+        function updateDashboard() {
+            const gradeObj = SURVEY_DATA[currentGrade];
+            const data = gradeObj[currentPeriod];
+
+            // Hitung rata-rata komposit 7 dimensi
+            const avgScore = data.scores.reduce((a, b) => a + b, 0) / data.scores.length;
+            const index100 = (avgScore / 5) * 100;
+
+            // Cari kebiasaan tertinggi & terendah
+            let maxIdx = 0;
+            let minIdx = 0;
+            data.scores.forEach((val, idx) => {
+                if (val > data.scores[maxIdx]) maxIdx = idx;
+                if (val < data.scores[minIdx]) minIdx = idx;
+            });
+
+            // Update Badges Filter
+            const periodNames = {
+                ALL: '4 Gelombang (N=' + data.n + ')',
+                W1: 'Gel. 1 • 6 Nov (N=' + data.n + ')',
+                W2: 'Gel. 2 • 9 Nov (N=' + data.n + ')',
+                W3: 'Gel. 3 • 13 Nov (N=' + data.n + ')',
+                W4: 'Gel. 4 • 16 Nov (N=' + data.n + ')'
+            };
+            document.getElementById('badge-active-grade').textContent = gradeObj.label;
+            document.getElementById('badge-active-period').textContent = periodNames[currentPeriod];
+
+            // Update 4 KPI Cards
+            document.getElementById('kpi-index-val').textContent = index100.toFixed(1);
+            document.getElementById('kpi-index-trend').innerHTML = `<i data-lucide="trending-up" class="w-3.5 h-3.5"></i> ${formatIndo(avgScore)} / 5,00`;
+            document.getElementById('kpi-index-bar').style.width = `${Math.min(100, index100)}%`;
+
+            document.getElementById('kpi-part-val').textContent = `${data.validRate.toFixed(1)}%`;
+            document.getElementById('kpi-part-badge').innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> ${data.n} Respons`;
+            document.getElementById('kpi-part-bar').style.width = `${data.validRate}%`;
+            document.getElementById('kpi-part-sub').textContent = `${data.unique} siswa unik terverifikasi dari ${data.n} entri`;
+
+            document.getElementById('kpi-top-name').textContent = HABIT_META[maxIdx].name;
+            document.getElementById('kpi-top-score').innerHTML = `<i data-lucide="star" class="w-3.5 h-3.5 fill-purple-500"></i> Skor ${formatIndo(data.scores[maxIdx])}`;
+            document.getElementById('kpi-top-bar').style.width = `${(data.scores[maxIdx] / 5) * 100}%`;
+            document.getElementById('kpi-top-sub').textContent = `${data.pctPos[maxIdx].toFixed(1)}% siswa kategori Sering/Selalu`;
+
+            document.getElementById('kpi-low-name').textContent = HABIT_META[minIdx].name;
+            document.getElementById('kpi-low-score').innerHTML = `<i data-lucide="alert-circle" class="w-3.5 h-3.5"></i> Skor ${formatIndo(data.scores[minIdx])}`;
+            document.getElementById('kpi-low-bar').style.width = `${(data.scores[minIdx] / 5) * 100}%`;
+            document.getElementById('kpi-low-sub').textContent = `${data.pctPos[minIdx].toFixed(1)}% konsisten (prioritas pembinaan)`;
+
+            // Update Radar Chart
+            if (radarChartInstance) {
+                radarChartInstance.data.datasets[0].data = data.scores;
+                radarChartInstance.data.datasets[0].label = `${gradeObj.label} (${currentPeriod})`;
+                radarChartInstance.update();
+            }
+
+            // Update Line Chart
+            if (lineChartInstance) {
+                lineChartInstance.data.datasets[0].data = data.trend;
+                lineChartInstance.data.datasets[0].label = `Tren ${gradeObj.label}`;
+                lineChartInstance.update();
+            }
+
+            // Render 7 Habit Cards
+            const habitContainer = document.getElementById('habit-cards-container');
+            habitContainer.innerHTML = HABIT_META.map((habit, idx) => {
+                const score = data.scores[idx];
+                const pct = data.pctPos[idx];
+                const barWidth = Math.min(100, (score / 5) * 100);
+                const isTop = idx === maxIdx;
+                const isLow = idx === minIdx;
+
+                return `
+                    <div class="p-4 rounded-2xl border ${isLow ? 'border-orange-200 bg-orange-50/40' : 'border-slate-100 bg-slate-50/60'} hover:bg-white hover:shadow-md transition flex flex-col justify-between gap-3">
+                        <div class="flex items-start justify-between gap-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl ${habit.bg} ${habit.text} flex items-center justify-center shrink-0">
+                                    <i data-lucide="${habit.icon}" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-1.5">
+                                        <h4 class="font-display font-bold text-slate-900 text-sm">${idx + 1}. ${habit.name}</h4>
+                                        ${isTop ? '<span class="px-1.5 py-0.5 rounded-md bg-purple-100 text-purple-700 text-[10px] font-extrabold">TOP</span>' : ''}
+                                        ${isLow ? '<span class="px-1.5 py-0.5 rounded-md bg-orange-100 text-orange-700 text-[10px] font-extrabold">FOKUS</span>' : ''}
+                                    </div>
+                                    <p class="text-[11px] text-slate-500">${habit.desc}</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="font-display text-lg font-extrabold text-slate-900">${formatIndo(score)}</span>
+                                <span class="block text-[10px] font-semibold text-slate-400">/ 5,00</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between text-[11px] font-semibold mb-1">
+                                <span class="text-slate-500">Konsistensi (Sering/Selalu)</span>
+                                <span class="${habit.text} font-bold">${pct.toFixed(1)}%</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-200/70 rounded-full overflow-hidden">
+                                <div class="h-full ${habit.bar} rounded-full transition-all duration-500" style="width: ${barWidth}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Render Class Leaderboard (dinamis mengikuti periode terpilih)
+            const ranks = ['XI', 'XII', 'X'].map(g => {
+                const sArr = SURVEY_DATA[g][currentPeriod].scores;
+                const avg = sArr.reduce((a, b) => a + b, 0) / sArr.length;
+                return {
+                    grade: g,
+                    label: SURVEY_DATA[g].label,
+                    n: SURVEY_DATA[g][currentPeriod].n,
+                    avg: avg,
+                    idx100: (avg / 5) * 100
+                };
+            }).sort((a, b) => b.avg - a.avg);
+
+            const medalStyles = [
+                { bg: 'bg-pastel-butter border-amber-200', badge: 'bg-amber-400 text-amber-950', icon: 'crown' },
+                { bg: 'bg-pastel-sky border-sky-200', badge: 'bg-sky-200 text-sky-900', icon: 'medal' },
+                { bg: 'bg-slate-50 border-slate-200', badge: 'bg-slate-200 text-slate-700', icon: 'award' }
+            ];
+
+            document.getElementById('leaderboard-container').innerHTML = ranks.map((item, i) => {
+                const style = medalStyles[i];
+                const isSelected = currentGrade === item.grade;
+                return `
+                    <div onclick="selectGrade('${item.grade}')" class="cursor-pointer p-3.5 rounded-2xl border ${style.bg} ${isSelected ? 'ring-2 ring-blue-500' : ''} flex items-center justify-between transition hover:scale-[1.01]">
+                        <div class="flex items-center gap-3">
+                            <span class="w-7 h-7 rounded-xl ${style.badge} font-display font-extrabold text-xs flex items-center justify-center">
+                                #${i + 1}
+                            </span>
+                            <div>
+                                <p class="font-display font-bold text-slate-900 text-sm">${item.label}</p>
+                                <p class="text-[11px] text-slate-500">${item.n} respons • Indeks ${item.idx100.toFixed(1)}</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <span class="font-display font-extrabold text-base text-slate-900">${formatIndo(item.avg)}</span>
+                            <span class="block text-[10px] text-slate-500">rata-rata</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Update Xavi AI Coach Insight Text
+            document.getElementById('ai-dynamic-insight').innerHTML = `
+                <p>${data.aiNote}</p>
+            `;
+
+            // Re-render Lucide Icons untuk elemen baru
+            lucide.createIcons();
+        }
+
+        // Event Handler Filter Jenjang
+        function selectGrade(grade) {
+            currentGrade = grade;
+            document.querySelectorAll('.grade-btn').forEach(btn => {
+                if (btn.dataset.grade === grade) {
+                    btn.className = 'grade-btn active px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition bg-blue-600 text-white shadow-sm';
+                } else {
+                    btn.className = 'grade-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition bg-slate-100 text-slate-600 hover:bg-sky-100 hover:text-blue-700';
+                }
+            });
+            updateDashboard();
+        }
+
+        // Event Handler Filter Periode
+        function selectPeriod(period) {
+            currentPeriod = period;
+            document.querySelectorAll('.period-btn').forEach(btn => {
+                if (btn.dataset.period === period) {
+                    btn.className = 'period-btn active px-3.5 py-1.5 rounded-full text-xs font-bold transition bg-purple-600 text-white shadow-sm';
+                } else {
+                    btn.className = 'period-btn px-3.5 py-1.5 rounded-full text-xs font-semibold transition bg-slate-100 text-slate-600 hover:bg-purple-100 hover:text-purple-700';
+                }
+            });
+            updateDashboard();
+        }
+
+        function resetFilters() {
+            selectGrade('ALL');
+            selectPeriod('ALL');
+        }
+
+        // Pasang Listener Tombol
+        document.querySelectorAll('.grade-btn').forEach(btn => {
+            btn.addEventListener('click', () => selectGrade(btn.dataset.grade));
+        });
+        document.querySelectorAll('.period-btn').forEach(btn => {
+            btn.addEventListener('click', () => selectPeriod(btn.dataset.period));
+        });
+
+        // Jalankan saat halaman selesai dimuat
+        window.addEventListener('DOMContentLoaded', () => {
+            initRadarChart();
+            initLineChart();
+            updateDashboard();
+        });
+    </script>
+</body>
+</html>
